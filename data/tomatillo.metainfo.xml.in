@@ -53,6 +53,24 @@
     </screenshot>
   </screenshots>
 
+  <categories>
+    <category>Utility</category>
+    <category>Office</category>
+  </categories>
+
+  <keywords>
+    <keyword translate="no">Pomodoro</keyword>
+  </keywords>
+
+  <recommends>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <control>touch</control>
+  </recommends>
+  <requires>
+    <display_length compare="ge">360</display_length>
+  </requires>
+
   <releases>
     <release version="1.0.0" date="2025-12-00">
       <description translate="no">
