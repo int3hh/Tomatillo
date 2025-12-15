@@ -32,23 +32,23 @@
 
   <screenshots>
     <screenshot type="default">
-      <image>https://image.png</image>
+      <image>https://raw.githubusercontent.com/diegopvlk/Tomatillo/09cfff0/screenshots/focus.png</image>
       <caption>Focus Session</caption>
     </screenshot>
-    <screenshot type="default">
-      <image>https://image.png</image>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/diegopvlk/Tomatillo/09cfff0/screenshots/preferences.png</image>
       <caption>Preferences</caption>
     </screenshot>
     <screenshot>
-      <image>https://image.png</image>
+      <image>https://raw.githubusercontent.com/diegopvlk/Tomatillo/09cfff0/screenshots/break.png</image>
       <caption>Break Session</caption>
     </screenshot>
     <screenshot>
-      <image>https://image.png</image>
+      <image>https://raw.githubusercontent.com/diegopvlk/Tomatillo/09cfff0/screenshots/long-break.png</image>
       <caption>Long Break Session</caption>
     </screenshot>
-    <screenshot type="default">
-      <image>https://image.png</image>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/diegopvlk/Tomatillo/09cfff0/screenshots/focus-dark.png</image>
       <caption>Focus Session - Dark Mode</caption>
     </screenshot>
   </screenshots>
