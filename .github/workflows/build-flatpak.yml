@@ -1,8 +1,13 @@
+name: CI
+
 on:
   push:
-    branches: [main]
+    branches:
+      - "**"
   pull_request:
-name: CI
+    branches:
+      - "**"
+
 jobs:
   flatpak:
     name: "Flatpak"
