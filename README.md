@@ -11,26 +11,30 @@ Focus better, work smarter.
 ### Description
 
 Tomatillo is a Pomodoro Timer app for your productivity tasks.<br>
-Work for a set time, then take a short break. After several cycles, take a longer break.
+Work for a set time, then take a short break. After some cycles, take a longer break.
 
 ### Features
 
 - **Notifications** — Reminders with sound alert.
 - **Custom timers** — Set individual durations for focus sessions, short breaks, and long breaks.
-- **Custom session count** — Choose the amount of sessions before a longer break.
-- **Autostart sessions** — Automatically begin the next focus or break interval.
+- **Long break interval** — Choose the amount of cycles before a long break.
+- **Autostart cycles** — Automatically begin the next focus/break cycle.
 
-### Screenshot
+### Screenshots
 
-<p align="center"><img src="screenshots/focus.png"/></p>
+<p align="center">
+  <img style="width:410px;height:420px;" src="screenshots/focus.png" alt="Focus Session" style="margin-right:5%;">
+  <img style="width:410px;height:420px;" src="screenshots/focus-dark.png" alt="Focus Session - Dark Mode" >
+</p>
 
 <div>
   <details>
     <summary>Other Screenshots (Expand):</summary><br>
-      <p align="center"><img src="screenshots/preferences.png"/></p>
-      <p align="center"><img src="screenshots/break.png"/></p>
-      <p align="center"><img src="screenshots/long-break.png"/></p>
-      <p align="center"><img src="screenshots/focus-dark.png"/></p>
+      <p align="center"><img style="height:678px;" src="screenshots/preferences.png" alt="Preferences"/></p>
+      <p align="center">
+        <img style="width:410px;height:420px;" src="screenshots/break.png" alt="Break Session" style="margin-right:5%;">
+        <img style="width:410px;height:420px;" src="screenshots/long-break.png" alt="Long Break Session" >
+      </p>
   </details>
 </div>
 
