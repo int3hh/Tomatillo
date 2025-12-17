@@ -60,12 +60,14 @@ class TomatilloApplication(Adw.Application):
         win.set_hide_on_close(run_in_bg)
 
     def on_about_action(self, *args):
+        APP_VERSION = getattr(sys.modules["__main__"], "VERSION")
+
         """Callback for the app.about action."""
         about = Adw.AboutDialog(
             application_name="Tomatillo",
             application_icon="io.github.diegopvlk.Tomatillo",
             developer_name="Diego Povliuk",
-            version="1.0.0",
+            version=APP_VERSION,
             developers=["Diego Povliuk"],
             copyright="© 2025 Diego Povliuk",
             issue_url="https://github.com/diegopvlk/Tomatillo/issues",
