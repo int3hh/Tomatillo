@@ -19,98 +19,73 @@
 
 import gi
 
+gi.require_version("Adw", "1")
 gi.require_version("Gio", "2.0")
 gi.require_version("Gtk", "4.0")
 
-from gi.repository import Gio, Gtk
+from gi.repository import Adw, Gio, Gtk
 
 settings = Gio.Settings.new("io.github.diegopvlk.Tomatillo")
 
 
-def open_preferences(active_window):
-    builder = Gtk.Builder.new_from_resource(
-        "/io/github/diegopvlk/Tomatillo/preferences.ui"
-    )
+@Gtk.Template(resource_path="/io/github/diegopvlk/Tomatillo/preferences.ui")
+class Preferences(Adw.Dialog):
+    __gtype_name__ = "Preferences"
 
-    focus_time = builder.get_object("focus_time")
-    short_b_time = builder.get_object("short_b_time")
-    long_b_time = builder.get_object("long_b_time")
-    long_b_interval = builder.get_object("long_b_interval")
-    prefs_dialog = builder.get_object("prefs_dialog")
-    switch_background = builder.get_object("switch_background")
-    switch_sound = builder.get_object("switch_sound")
-    switch_dnd = builder.get_object("switch_dnd")
-    switch_auto_focus = builder.get_object("switch_auto_focus")
-    switch_auto_break = builder.get_object("switch_auto_break")
+    focus_time = Gtk.Template.Child()
+    short_b_time = Gtk.Template.Child()
+    long_b_time = Gtk.Template.Child()
+    long_b_interval = Gtk.Template.Child()
+    switch_background = Gtk.Template.Child()
+    switch_sound = Gtk.Template.Child()
+    switch_dnd = Gtk.Template.Child()
+    switch_auto_focus = Gtk.Template.Child()
+    switch_auto_break = Gtk.Template.Child()
 
-    def update_ui():
-        active_window.on_reset_timer_activated()
-        active_window.update_ui_timer()
-        active_window.update_cycles_label_bg()
+    def __init__(self, active_window, **kwargs):
+        super().__init__(**kwargs)
+        self.window = active_window
 
-    def set_focus_time(spin_row, _param):
+    @Gtk.Template.Callback()
+    def _set_spin_start_val_from_key(self, _dialog, key, spin_row):
+        spin_row.sett_key = key
+        return settings.get_int(key)
+
+    @Gtk.Template.Callback()
+    def _set_spin_value_and_key(self, spin_row, _pspec):
+        key = spin_row.sett_key
         value = int(spin_row.get_value())
-        active_window.time_focus = value * 60
-        update_ui()
-        settings.set_int("focus-time", value)
+        minutes = value * 60
 
-    def set_short_b_time(spin_row, _param):
-        value = int(spin_row.get_value())
-        active_window.time_short_break = value * 60
-        update_ui()
-        settings.set_int("short-b-time", value)
+        if key == "focus-time":
+            self.window.time_focus = minutes
+        elif key == "short-b-time":
+            self.window.time_short_break = minutes
+        elif key == "long-b-time":
+            self.window.time_long_break = minutes
+        elif key == "long-b-interval":
+            self.window.long_b_interval = value
 
-    def set_long_b_time(spin_row, _param):
-        value = int(spin_row.get_value())
-        active_window.time_long_break = value * 60
-        update_ui()
-        settings.set_int("long-b-time", value)
+        settings.set_int(key, value)
+        self._update_ui()
 
-    def set_long_b_interval(spin_row, _param):
-        value = int(spin_row.get_value())
-        active_window.time_long_interval = value
-        update_ui()
-        settings.set_int("long-b-interval", value)
+    @Gtk.Template.Callback()
+    def _set_switch_start_state_from_key(self, _dialog, key, switch_row):
+        switch_row.sett_key = key
+        return settings.get_boolean(key)
 
-    def run_in_bg_changed(sett, key):
-        state = sett.get_boolean(key)
-        active_window.set_hide_on_close(state)
+    @Gtk.Template.Callback()
+    def _set_switch_settings_key(self, switch_row, _pspec):
+        settings.set_boolean(switch_row.sett_key, switch_row.get_active())
 
-    def set_state_run_in_bg(_switch, state):
-        settings.set_boolean("run-in-background", state)
+    @Gtk.Template.Callback()
+    def _set_run_in_bg(self, switch_row, _pspec):
+        key = switch_row.sett_key
+        state = switch_row.get_active()
+        settings.set_boolean(key, state)
+        self.window.set_hide_on_close(state)
 
-    def set_state_notif_sound(_switch, state):
-        settings.set_boolean("notif-sound", state)
-
-    def set_state_bypass_dnd(_switch, state):
-        settings.set_boolean("bypass-dnd", state)
-
-    def set_state_auto_focus(_switch, state):
-        settings.set_boolean("auto-focus", state)
-
-    def set_state_auto_break(_switch, state):
-        settings.set_boolean("auto-break", state)
-
-    focus_time.set_value(settings.get_int("focus-time"))
-    short_b_time.set_value(settings.get_int("short-b-time"))
-    long_b_time.set_value(settings.get_int("long-b-time"))
-    long_b_interval.set_value(settings.get_int("long-b-interval"))
-    switch_background.set_active(settings.get_boolean("run-in-background"))
-    switch_sound.set_active(settings.get_boolean("notif-sound"))
-    switch_dnd.set_active(settings.get_boolean("bypass-dnd"))
-    switch_auto_focus.set_active(settings.get_boolean("auto-focus"))
-    switch_auto_break.set_active(settings.get_boolean("auto-break"))
-
-    focus_time.connect("notify::value", set_focus_time)
-    short_b_time.connect("notify::value", set_short_b_time)
-    long_b_time.connect("notify::value", set_long_b_time)
-    long_b_interval.connect("notify::value", set_long_b_interval)
-    switch_background.connect("state-set", set_state_run_in_bg)
-    switch_sound.connect("state-set", set_state_notif_sound)
-    switch_dnd.connect("state-set", set_state_bypass_dnd)
-    switch_auto_focus.connect("state-set", set_state_auto_focus)
-    switch_auto_break.connect("state-set", set_state_auto_break)
-
-    settings.connect("changed::run-in-background", run_in_bg_changed)
-
-    prefs_dialog.present(active_window)
+    def _update_ui(self):
+        self.window.on_reset_timer_activated()
+        self.window.update_ui_timer()
+        self.window.update_cycles_label_bg()

@@ -27,7 +27,7 @@ gi.require_version("Gtk", "4.0")
 
 from gi.repository import Adw, Gio, Gtk
 from .window import TomatilloWindow
-from .preferences import open_preferences, settings
+from .preferences import Preferences, settings
 
 
 class TomatilloApplication(Adw.Application):
@@ -83,7 +83,8 @@ class TomatilloApplication(Adw.Application):
 
     def on_preferences_action(self, *args):
         """Callback for the app.preferences action."""
-        open_preferences(self.props.active_window)
+        preferences = Preferences(self.props.active_window)
+        preferences.present(self.props.active_window)
 
     def create_action(self, name, callback, shortcuts=None):
         """Add an application action.

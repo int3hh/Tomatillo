@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-Adw.Dialog prefs_dialog {
+template $Preferences: Adw.Dialog {
 	title: _("Preferences");
 	content-width: 420;
 
@@ -14,34 +14,37 @@ Adw.Dialog prefs_dialog {
 				Adw.PreferencesGroup {
 					Adw.SpinRow focus_time {
 						title: _("Focus");
+						value: bind $_set_spin_start_val_from_key("focus-time", focus_time) as <int>;
+						notify::value => $_set_spin_value_and_key();
 
 						adjustment: Adjustment {
 							step-increment: 1;
 							lower: 1;
 							upper: 240;
-							value: 25;
 						};
 					}
 
 					Adw.SpinRow short_b_time {
 						title: _("Short Break");
+						value: bind $_set_spin_start_val_from_key("short-b-time", short_b_time) as <int>;
+						notify::value => $_set_spin_value_and_key();
 
 						adjustment: Adjustment {
 							step-increment: 1;
 							lower: 1;
 							upper: 90;
-							value: 5;
 						};
 					}
 
 					Adw.SpinRow long_b_time {
 						title: _("Long Break");
+						value: bind $_set_spin_start_val_from_key("long-b-time", long_b_time) as <int>;
+						notify::value => $_set_spin_value_and_key();
 
 						adjustment: Adjustment {
 							step-increment: 1;
 							lower: 1;
 							upper: 90;
-							value: 15;
 						};
 					}
 				}
@@ -49,70 +52,46 @@ Adw.Dialog prefs_dialog {
 				Adw.PreferencesGroup {
 					Adw.SpinRow long_b_interval {
 						title: _("Long Break Interval");
+						value: bind $_set_spin_start_val_from_key("long-b-interval", long_b_interval) as <int>;
+						notify::value => $_set_spin_value_and_key();
 
 						adjustment: Adjustment {
 							step-increment: 1;
 							lower: 1;
 							upper: 120;
-							value: 4;
 						};
 					}
 				}
 
 				Adw.PreferencesGroup {
-					Adw.ActionRow {
+					Adw.SwitchRow switch_background {
 						title: _("Run in Background");
-						activatable-widget: switch_background;
-
-						[suffix]
-						Switch switch_background {
-							halign: center;
-							valign: center;
-						}
+						active: bind $_set_switch_start_state_from_key("run-in-background", switch_background) as <bool>;
+						notify::active => $_set_run_in_bg();
 					}
 
-					Adw.ActionRow {
+					Adw.SwitchRow switch_sound {
 						title: _("Notification Sound");
-						activatable-widget: switch_sound;
-
-						[suffix]
-						Switch switch_sound {
-							halign: center;
-							valign: center;
-						}
+						active: bind $_set_switch_start_state_from_key("notif-sound", switch_sound) as <bool>;
+						notify::active => $_set_switch_settings_key();
 					}
 
-					Adw.ActionRow {
+					Adw.SwitchRow switch_dnd {
 						title: _("Bypass 'Do Not Disturb'");
-						activatable-widget: switch_dnd;
-
-						[suffix]
-						Switch switch_dnd {
-							halign: center;
-							valign: center;
-						}
+						active: bind $_set_switch_start_state_from_key("bypass-dnd", switch_dnd) as <bool>;
+						notify::active => $_set_switch_settings_key();
 					}
 
-					Adw.ActionRow {
+					Adw.SwitchRow switch_auto_focus {
 						title: _("Autostart Focus");
-						activatable-widget: switch_auto_focus;
-
-						[suffix]
-						Switch switch_auto_focus {
-							halign: center;
-							valign: center;
-						}
+						active: bind $_set_switch_start_state_from_key("auto-focus", switch_auto_focus) as <bool>;
+						notify::active => $_set_switch_settings_key();
 					}
 
-					Adw.ActionRow {
+					Adw.SwitchRow switch_auto_break {
 						title: _("Autostart Break");
-						activatable-widget: switch_auto_break;
-
-						[suffix]
-						Switch switch_auto_break {
-							halign: center;
-							valign: center;
-						}
+						active: bind $_set_switch_start_state_from_key("auto-break", switch_auto_break) as <bool>;
+						notify::active => $_set_switch_settings_key();
 					}
 				}
 			}
