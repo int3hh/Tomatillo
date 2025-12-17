@@ -19,7 +19,7 @@
     <name translate="no">Diego Povliuk</name>
   </developer>
 
-  <name translate="no">Tomatillo</name>
+  <name>Tomatillo</name>
   <summary>Focus better, work smarter</summary>
   <description>
     <p>Tomatillo is a Pomodoro Timer app for your productivity tasks. Work for a set time, then take a short break. After some cycles, take a longer break.</p>
